@@ -11,8 +11,9 @@ The tool uses [PHPCS][1], [PHP Unit][2] and [Drupal Coder][3] and these tools wi
 
 ## Install
 
-- Add `setup` to your project
-- Run `./setup`
+```
+wget https://raw.githubusercontent.com/steveworley/pre-commit-tools/master/setup -v -O setup && ./setup {UPSTREAM}
+```
 
 ## Configuration
 
