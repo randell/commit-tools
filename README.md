@@ -2,7 +2,7 @@
 
 Pre-commit tools for Acquia Cloud Drupal projects. Performs quality assurance tasks for each commit made against a project.
 
-The tool uses (PHPCS)[1], (PHP Unit)[2] and (Drupal Coder)[3] and these tools will be installed locally to the project. New developers on a project will have the prerequisites met when they perform their first commit.
+The tool uses [PHPCS][1], [PHP Unit][2] and [Drupal Coder][3] and these tools will be installed locally to the project. New developers on a project will have the prerequisites met when they perform their first commit.
 
 ## Dependencies
 
