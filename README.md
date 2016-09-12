@@ -23,7 +23,7 @@ Alternatively:
 - Configure the upstream
 - Execute `setup`
 
-When sharing a project around, developers will need to run `./setup` prior to starting work, this will ensure that all `pre-commit` hooks are available.
+Developers will need to run `./setup` prior to starting work, this will ensure that all `pre-commit` tasks are available.
 
 ## Configuration
 
