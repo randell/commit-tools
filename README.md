@@ -16,6 +16,12 @@ The tool uses [PHPCS][1], [PHP Unit][2] and [Drupal Coder][3] and these tools wi
 
 When the initial commit is run it will validate the project and fetch any missing files that it requires to run.
 
+## Configuration
+
+Alter the `pre-commit` file and change the configuration variables so they matche your project.
+
+- `UPSTREAM` _[default: master]_: A branch that is considered the upstream. This will be the branch that is used to generate the diff when determining which files to validate.
+
 ## Notes
 
 - Hooks can be skipped by adding the `--no-verify` option when committing
