@@ -103,13 +103,13 @@ if [ ! -f $ROOT/.git/hooks/pre-commit ]; then
   sed -i '' -e "s|UPSTREAM=master|UPSTREAM=$UPSTREAM|g" "$ROOT/.git/hooks/pre-commit"
   chmod +x $ROOT/.git/hooks/pre-commit
 
-  mkdir $ROOT/.git/hooks/pre-commit-hooks
+  mkdir $ROOT/.git/hooks/tasks
 
   # List of commands that we want to include as hooks to run for this project
-  GIT_URL=https://raw.githubusercontent.com/steveworley/pre-commit-tools/master/pre-commit-hooks
+  GIT_URL=https://raw.githubusercontent.com/steveworley/pre-commit-tools/master/tasks
   for hook in ${HOOKS[@]}
   do
-    wget -O "$ROOT/.git/hooks/pre-commit-hooks/$hook" "$GIT_URL/$hook"
+    wget -O "$ROOT/.git/hooks/tasks/$hook" "$GIT_URL/$hook"
   done
 fi
 

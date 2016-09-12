@@ -10,7 +10,7 @@
 #    - Ensure that vendor has been added to the .gitignore
 #    - Composer has been run and vendors are available
 #
-# It then finds all scripts that are in pre-commit-hooks and will execute them
+# It then finds all scripts that are in tasks and will execute them
 # prior to allowing the user to continue with a commit.
 #
 
@@ -28,7 +28,7 @@ fi
 
 # Locate the hooks that we should run before a commit.
 # ------------------------------------------------------
-HOOKS=`find $ROOT/.git/hooks/pre-commit-hooks -iname "*.sh"`
+HOOKS=`find $ROOT/.git/hooks/tasks -iname "*.sh"`
 for hook in $HOOKS
 do
   sh $hook $UPSTREAM $DIFF
