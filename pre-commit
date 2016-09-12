@@ -17,7 +17,7 @@
 UPSTREAM=master
 DIFF=`git diff --name-only $UPSTREAM`
 
-ROOT="$(pwd)/"
+ROOT="$(pwd)"
 
 # Test to see if we're on the upstream branch.
 CUR=`git rev-parse --abbrev-ref HEAD`
