@@ -26,7 +26,7 @@ if [ $UPSTREAM == $CUR ]; then
   exit 0 # exit with 0 allows git commit to continue.
 fi
 
-# Locate the hooks that we should run before a commit.
+# Locate the tasks that we should run before a commit.
 # ------------------------------------------------------
 TASKS=`find $ROOT/.git/hooks/tasks -iname "*.sh"`
 for task in $TASKS
