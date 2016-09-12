@@ -2,13 +2,6 @@
 
 #
 # Pre-commit hook.
-# The pre-commit hook will ensure that the following is available for the project:
-#
-#    - PHP is available for the terminal
-#    - Composer.json has been downloaded for the project
-#    - Composer is available for the project
-#    - Ensure that vendor has been added to the .gitignore
-#    - Composer has been run and vendors are available
 #
 # It then finds all scripts that are in tasks and will execute them
 # prior to allowing the user to continue with a commit.
