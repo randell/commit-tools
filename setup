@@ -1,0 +1,96 @@
+#!/usr/bin/env bash
+
+#
+# File to handle the setup process.
+# This file should be placed in the root of the project.
+#
+
+# CONFIGURAITON:
+# Variables here should be configured per project.
+# -------------------------------------------
+UPSTREAM=${1:-master}
+# ---
+
+ROOT="$( cd "$( git rev-parse --show-cdup )" && pwd )"
+
+# Create a lock file.
+if [ -f "$ROOT/setup.lock" ]; then
+  echo "Setup has been run"
+  exit 0
+fi
+
+# Test to see if the directory structure matches the Acquia Cloud expectation.
+if [ ! -d "$ROOT/docroot" ]; then
+  echo "Unable to locate Drupal. This needs to be run from an Acquia directory configuration."
+  exit 1
+fi
+
+# Test php is available (should be if terminal is opened with DD)
+php -v > /dev/null 2>&1
+PHP_IS_INSTALLED=$?
+
+if [ $PHP_IS_INSTALLED -ne 0 ]; then
+  echo "Unable to find PHP. Please run from terminal with php on path"
+  exit 1
+fi
+
+# Test to see if composer.json has been downloaded.
+if [ ! -f "$ROOT/composer.json" ]; then
+  wget -O $ROOT/composer.json https://gist.githubusercontent.com/steveworley/5b901e7397327635b230fc62b98af0d5/raw/49995b34f88b51083f0d4dd37c96d356c8ac70a5/composer.json
+fi
+
+# Update the gitignore.
+IGNORE_VENDOR="vendor"
+IGNORE_COMPOSER="composer.phar"
+IGNORE_LOCK="setup.lock"
+grep -q "$IGNORE_VENDOR" "$ROOT/.gitignore" || echo "$IGNORE_VENDOR" >> "$ROOT/.gitignore"
+grep -q "$IGNORE_COMPOSER" "$ROOT/.gitignore" || echo "$IGNORE_COMPOSER" >> "$ROOT/.gitignore"
+grep -q "$IGNORE_LOCK" "$ROOT/.gitignore" || echo "$IGNORE_LOCK" >> "$ROOT/.gitignore"
+
+# Test if Composer is installed
+if [ ! -f "$ROOT/composer.phar" ]; then
+  echo "Composer not installed... attmepting to install."
+  curl -sS https://getcomposer.org/installer | php;
+fi
+
+# Test if Composer is installed
+$ROOT/composer.phar -v > /dev/null 2>&1
+COMPOSER_IS_INSTALLED=$?
+
+if [ $COMPOSER_IS_INSTALLED -ne 0 ]; then
+  # Composer could not be installed... prompt to install manually and retry.
+  echo "Unable to install Composer. Please install manually and retry."
+  exit 1
+fi
+
+# Test to see if dependencies have been installed.
+if [ ! -d "$ROOT/vendor" ]; then
+  echo "Installing dependencies..."
+  $ROOT/composer.phar install
+
+  # Register Drupal CS standards.
+  PHPCS="$ROOT/vendor/bin/phpcs"
+  $PHPCS --config-set installed_paths $ROOT/vendor/drupal/coder/coder_sniffer
+fi
+
+# Fetch git hooks.
+if [ ! -f $ROOT/.git/hooks/pre-commit ]; then
+  echo "Setting up git hooks..."
+
+  wget -O $ROOT/.git/hooks/pre-commit https://raw.githubusercontent.com/steveworley/pre-commit-tools/master/pre-commit
+  sed -i -e "s|UPSTREAM=master|UPSTREAM=$UPSTREAM|g" "$ROOT/.git/hooks/pre-commit"
+
+  mkdir $ROOT/.git/hooks/pre-commit-hooks
+
+  HOOKS=(code-review.sh tests.sh)
+  GIT_URL=https://raw.githubusercontent.com/steveworley/pre-commit-tools/master/pre-commit-hooks
+  for hook in ${HOOKS[@]}
+  do
+    wget -O "$ROOT/.git/hooks/pre-commit-hooks/$hook" "$GIT_URL/$hook"
+  done
+fi
+
+# Complete!
+echo "Setup has finised."
+touch $ROOT/setup.lock
+exit 0

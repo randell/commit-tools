@@ -7,18 +7,16 @@ The tool uses [PHPCS], [PHP Unit] and [Drupal Code] and these tools will be inst
 ## Dependencies
 
 - Acquia Cloud hosting directory structure
+- Git is initialised
 
 ## Install
 
-- Copy `pre-commit` into `.git/hooks`
-- Copy `pre-commit-hooks` directory into `.git/hooks`
-- Perform a commit or run `./.git/hooks/pre-commit`
-
-When the initial commit is run it will validate the project and fetch any missing files that it requires to run.
+- Add `setup` to your project
+- Run `./setup`
 
 ## Project
 
-The tool is written in a way that will validate installation prior to committing. New developers on a project will have the prerequisites met when they perform their first commit.
+When sharing a project around, developers will need to run `./setup` prior to starting work. This will ensure that all `pre-commit` hooks are available.
 
 ## Notes
 
