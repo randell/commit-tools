@@ -14,7 +14,7 @@ The tool uses [PHPCS][1], [PHP Unit][2] and [Drupal Coder][3] and these tools wi
 ## Install
 
 ```
-wget https://raw.githubusercontent.com/steveworley/pre-commit-tools/master/setup -v -O setup && chmod +x ./setup && ./setup {UPSTREAM}
+wget https://raw.githubusercontent.com/steveworley/commit-tools/master/setup -v -O setup && chmod +x ./setup && ./setup {UPSTREAM}
 ```
 
 Alternatively:
@@ -39,5 +39,5 @@ Alter the `setup` file and change the configuration variables so they match your
 [1]: https://github.com/squizlabs/PHP_CodeSniffer
 [2]: https://github.com/sebastianbergmann/phpunit
 [3]: https://packagist.org/packages/drupal/coder
-[4]: https://raw.githubusercontent.com/steveworley/pre-commit-tools/master/setup
-[5]: https://github.com/steveworley/pre-commit-tools/tree/master/tasks
+[4]: https://raw.githubusercontent.com/steveworley/commit-tools/master/setup
+[5]: https://github.com/steveworley/commit-tools/tree/master/tasks
