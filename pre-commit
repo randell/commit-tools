@@ -28,10 +28,10 @@ fi
 
 # Locate the hooks that we should run before a commit.
 # ------------------------------------------------------
-HOOKS=`find $ROOT/.git/hooks/tasks -iname "*.sh"`
-for hook in $HOOKS
+TASKS=`find $ROOT/.git/hooks/tasks -iname "*.sh"`
+for task in $TASKS
 do
-  sh $hook $UPSTREAM $DIFF
+  sh $task $UPSTREAM $DIFF
 
   # Capture the exit status of the command, the git commit will be aborted if
   # we return a non-zero status.
