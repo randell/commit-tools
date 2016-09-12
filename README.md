@@ -7,7 +7,9 @@ The tool uses [PHPCS][1], [PHP Unit][2] and [Drupal Coder][3] and these tools wi
 ## Dependencies
 
 - Acquia Cloud hosting directory structure
-- Git is initialised
+- git
+- php
+- wget
 
 ## Install
 
@@ -21,13 +23,14 @@ Alternatively:
 - Configure the upstream
 - Execute `setup`
 
-## Configuration
+When sharing a project around, developers will need to run `./setup` prior to starting work, this will ensure that all `pre-commit` hooks are available.
 
-When sharing a project around, developers will need to run `./setup` prior to starting work. This will ensure that all `pre-commit` hooks are available.
+## Configuration
 
 Alter the `setup` file and change the configuration variables so they match your project.
 
 - `UPSTREAM` _[default: master]_: A branch that is considered the upstream. This will be the branch that is used to generate the diff when determining which files to validate.
+- `HOOKS` _[default: (code-review.sh tests.sh)]_: A list of hooks that you want to include with this project. These will be downloaded from [pre-commit-hooks][5] so only files available here can be used.
 
 ## Notes
 
@@ -37,3 +40,4 @@ Alter the `setup` file and change the configuration variables so they match your
 [2]: https://github.com/sebastianbergmann/phpunit
 [3]: https://packagist.org/packages/drupal/coder
 [4]: https://raw.githubusercontent.com/steveworley/pre-commit-tools/master/setup
+[5]: https://github.com/steveworley/pre-commit-tools/tree/master/pre-commit-hooks

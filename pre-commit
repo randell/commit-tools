@@ -14,11 +14,8 @@
 # prior to allowing the user to continue with a commit.
 #
 
-# CONFIGURAITON:
-# Variables here should be configured per project.
-# -------------------------------------------
 UPSTREAM=master
-# ---
+DIFF=`git diff --name-only $UPSTREAM`
 
 ROOT="$(pwd)/"
 
@@ -34,7 +31,7 @@ fi
 HOOKS=`find $ROOT/.git/hooks/pre-commit-hooks -iname "*.sh"`
 for hook in $HOOKS
 do
-  sh $hook $UPSTREAM
+  sh $hook $UPSTREAM $DIFF
 
   # Capture the exit status of the command, the git commit will be aborted if
   # we return a non-zero status.

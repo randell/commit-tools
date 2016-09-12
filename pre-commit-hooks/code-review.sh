@@ -8,9 +8,7 @@
 ROOT=`pwd`
 PHPCS="$ROOT/vendor/bin/phpcs"
 UPSTREAM=$1
-
-# Run the codestandard check against changed files.
-FILES=`git diff --name-only $UPSTREAM`
+FILES=$2
 LINTED_FILES=''
 
 for f in $FILES
