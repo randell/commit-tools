@@ -144,9 +144,9 @@ fi
 
 # Add commit message validation.
 if [ ! -f $ROOT/.git/hooks/commit-msg ]; then
-  wget -O $ROOT/.git/hooks/pre-commit https://raw.githubusercontent.com/steveworley/commit-tools/master/commit-msg
-  sed -i '' -e "s|LENGTH=#replace#|LENGTH=$LENGTH|g" "$ROOT/.git/hooks/pre-commit"
-  sed -i '' -e "s|PREFIX=#replace#|PREFIX=$PREFIX|g" "$ROOT/.git/hooks/pre-commit"
+  wget -O $ROOT/.git/hooks/commit-msg https://raw.githubusercontent.com/steveworley/commit-tools/master/commit-msg
+  sed -i '' -e "s|LENGTH=#replace#|LENGTH=$LENGTH|g" "$ROOT/.git/hooks/commit-msg"
+  sed -i '' -e "s|PREFIX=#replace#|PREFIX=$PREFIX|g" "$ROOT/.git/hooks/commit-msg"
 fi
 
 # Complete!
