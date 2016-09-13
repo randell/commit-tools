@@ -8,12 +8,13 @@
 #
 
 UPSTREAM=master
-DIFF=`git diff --name-only $UPSTREAM`
-
 ROOT="$(pwd)"
 
-# Test to see if we're on the upstream branch.
+# Diff filter is used to show only changed and added files.
+DIFF=`git diff --cached --name-only --diff-filter=ACM $UPSTREAM`
 CUR=`git rev-parse --abbrev-ref HEAD`
+
+# Test to see if we're on the upstream branch.
 if [ $UPSTREAM == $CUR ]; then
   echo "Unable to run against the upstream branch, swap to a feature!"
   exit 0 # exit with 0 allows git commit to continue.
