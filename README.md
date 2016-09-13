@@ -23,7 +23,7 @@ Alternatively:
 - Configure the upstream
 - Execute `setup`
 
-Developers will need to run `./setup` prior to starting work, this will ensure that all `pre-commit` tasks are available.
+The `setup` file should be committed to the project repo so that developers can run `./setup` prior to starting work. This will ensure that all `pre-commit` tasks are available.
 
 ## Configuration
 
