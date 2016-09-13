@@ -14,6 +14,8 @@
 # -------------------------------------------
 UPSTREAM=master
 TASKS=(code-review.sh tests.sh)
+PREFIX=PROJ # Used for commit-msg.
+LENGTH=15 # Used for commit-msg.
 # -------------------------------------------
 
 # Determine the root directory of the git repository.
@@ -31,19 +33,46 @@ function fetch_composer_json() {
   wget -O $1/composer.json https://gist.githubusercontent.com/steveworley/5b901e7397327635b230fc62b98af0d5/raw/49995b34f88b51083f0d4dd37c96d356c8ac70a5/composer.json
 }
 
+# Update configuration when setup is run.
+#
+# First run of this program when command line arguments are passed in should
+# update the configuration variables such that subsequent runs of setup for a
+# project should not need to know the configurations for the project.
+#
+# @param $1 PATTERN
+#   sed regex compatible string / delimiters
+# @param $2 REPLACE
+#   sed regex compatible string / delimiters
+# @param $3 LINE
+#   Line number to be used to limit the replacement.
+function update_config() {
+  file="$( cd "$( git rev-parse --show-cdup )" && pwd )/$( basename $0)"
+  sed -i '' -e "${3}s/$1/$2/g" "$4"
+}
+
 # Test to see if the directory structure matches the Acquia Cloud expectation.
 if [ ! -d "$ROOT/docroot" ]; then
   echo "Unable to locate Drupal. This needs to be run from an Acquia directory configuration."
   exit 1
 fi
 
-# If the UPSTREAM has been passed in to the script we should update the script
-# so that subsequent runs will install with the correct UPSTREAM.
+# UPSTREAM has been passed into the program
 if [ $1 ] && [ "$UPSTREAM" == "master" ]; then
-  ME=`basename "$0"`
   UPSTREAM=$1
-  sed -i '' -e "15s|UPSTREAM=master|UPSTREAM=$UPSTREAM|g" "$ROOT/$ME"
-fi;
+  update_config "UPSTREAM=master" "UPSTREAM=$UPSTREAM" 15
+fi
+
+# LENGTH has been passed into the program
+if [ $2 ] && [ "$PREFIX" == 'PROJ' ]; then
+  PREFIX=$2
+  update_config "PREFIX=PROJ" "PREFIX=$PREFIX" 17
+fi
+
+# LENGTH has been passed into the program
+if [ $3 ] && [ "$LENGTH" == 15 ]; then
+  LENGTH=$3
+  update_config "LENGTH=15" "LENGTH=$LENGTH" 18
+fi
 
 # Test php is available (should be if terminal is opened with DD)
 php -v > /dev/null 2>&1
@@ -111,6 +140,13 @@ if [ ! -f $ROOT/.git/hooks/pre-commit ]; then
   do
     wget -O "$ROOT/.git/hooks/tasks/$task" "$GIT_URL/$task"
   done
+fi
+
+# Add commit message validation.
+if [ ! -f $ROOT/.git/hooks/commit-msg ]; then
+  wget -O $ROOT/.git/hooks/pre-commit https://raw.githubusercontent.com/steveworley/commit-tools/master/commit-msg
+  sed -i '' -e "s|LENGTH=#replace#|LENGTH=$LENGTH|g" "$ROOT/.git/hooks/pre-commit"
+  sed -i '' -e "s|PREFIX=#replace#|PREFIX=$PREFIX|g" "$ROOT/.git/hooks/pre-commit"
 fi
 
 # Complete!

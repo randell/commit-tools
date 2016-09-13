@@ -14,7 +14,7 @@ The tool uses [PHPCS][1], [PHP Unit][2] and [Drupal Coder][3] and these tools wi
 ## Install
 
 ```
-wget https://raw.githubusercontent.com/steveworley/commit-tools/master/setup -v -O setup && chmod +x ./setup && ./setup {UPSTREAM}
+wget https://raw.githubusercontent.com/steveworley/commit-tools/master/setup -v -O setup && chmod +x ./setup && ./setup develop
 ```
 
 Alternatively:
@@ -25,12 +25,38 @@ Alternatively:
 
 Developers will need to run `./setup` prior to starting work, this will ensure that all `pre-commit` tasks are available.
 
+## Arguments
+
+The `setup` script will accept a number of arguments to help generate the required files for the project.
+
+#### UPSTREAM
+
+The upstream branch that this project will use.
+
+#### PREFIX
+
+The project prefix. Typically should match the JIRA prefix.
+
+#### LENGTH
+
+The minimum length a commit message can be.
+
+**Example**
+
+```
+wget https://raw.githubusercontent.com/steveworley/commit-tools/master/setup -v -O setup && chmod +x ./setup && ./setup develop PRO 20
+```
+
+Any arguments provided will be used to update the `setup` script so that subsequent runs can install dependencies without knowledge of configuration.
+
 ## Configuration
 
 Alter the `setup` file and change the configuration variables so they match your project.
 
 - `UPSTREAM` _[default: master]_: A branch that is considered the upstream. This will be the branch that is used to generate the diff when determining which files to validate.
 - `TASKS` _[default: (code-review.sh tests.sh)]_: A list of tasks that you want to include with this project. These will be downloaded from [tasks][5] so only files available here can be used.
+- `PREFIX` _[default: PROJ]_: Prefix used for commit messages typically set to JIRA project name
+- `LENGTH` _[default: 15]_: Minimum length for commit messages
 
 ## Notes
 
