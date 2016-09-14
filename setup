@@ -30,7 +30,7 @@ fi
 # Fetch composer.json from a GIST.
 function fetch_composer_json() {
   echo "Fetching composer.json"
-  wget -O $1/composer.json https://gist.githubusercontent.com/steveworley/5b901e7397327635b230fc62b98af0d5/raw/49995b34f88b51083f0d4dd37c96d356c8ac70a5/composer.json
+  wget -O $1/composer.json https://raw.githubusercontent.com/steveworley/commit-tools/master/composer.json
 }
 
 # Update configuration when setup is run.
