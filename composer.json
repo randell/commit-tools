@@ -1,7 +1,9 @@
 {
+  "minimum-stability": "dev",
   "require-dev": {
     "squizlabs/php_codesniffer": "2.*",
     "drupal/coder": "8.2.8",
-    "phpunit/phpunit": "5.5.4"
+    "phpunit/phpunit": "5.5.4",
+    "pheromone/phpcs-security-audit": "dev-master"
   }
 }
