@@ -10,6 +10,13 @@
 UPSTREAM=master
 ROOT="$(pwd)"
 
+# Ensure that the upstream is a valid branch.
+git rev-parse --verify $UPSTREAM > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+  echo "[1]: Branch ($UPSTREAM) is not a valid upstream."
+  exit 0
+fi
+
 # Diff filter is used to show only changed and added files.
 DIFF=`git diff --cached --name-only --diff-filter=ACM $UPSTREAM`
 CUR=`git rev-parse --abbrev-ref HEAD`
