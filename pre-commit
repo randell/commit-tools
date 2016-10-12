@@ -17,14 +17,21 @@ if [ $? -ne 0 ]; then
   exit 0
 fi
 
-# Diff filter is used to show only changed and added files.
-DIFF=`git diff --cached --name-only --diff-filter=ACM $UPSTREAM`
-CUR=`git rev-parse --abbrev-ref HEAD`
-
+# Get the current branch.
+CUR=`git rev-parse --abbrev-ref HEAD 2> /dev/null`
 # Test to see if we're on the upstream branch.
 if [ $UPSTREAM == $CUR ]; then
   echo "Unable to run against the upstream branch, swap to a feature!"
   exit 0 # exit with 0 allows git commit to continue.
+fi
+
+# Diff filter is used to show only changed and added files.
+DIFF=`git diff --cached --name-only --diff-filter=ACM $UPSTREAM`
+
+# Ensure that the DIFF is not larger than Bash max variable size.
+if [ ${#DIFF} -ge `getconf ARG_MAX` ]; then
+  echo '[2]: Diff exceeds ARG_MAX.'
+  exit 0
 fi
 
 # Locate the tasks that we should run before a commit.
