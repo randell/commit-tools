@@ -7,7 +7,14 @@
 
 ROOT=`pwd`
 PHPUNIT="$ROOT/vendor/bin/phpunit"
-DIRS=`find $ROOT/docroot/sites/all/themes/custom -name tests -type d`
+DIR="$ROOT/docroot/sites/all/themes/custom"
+
+if [ ! -d "$DIR"]; then
+  echo "Custom theme directory is not found... skipping theme tests."
+  exit 0;
+fi
+
+DIRS=`find $DIR -name tests -type d`
 
 # Run all tests to make sure they're working.
 for d in $DIRS
