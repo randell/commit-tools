@@ -1,8 +1,8 @@
 # Pre-commit tools
 
-Pre-commit tools for Acquia Cloud Drupal projects. Performs quality assurance tasks for each commit made against a project.
+Pre-commit tools for Acquia Cloud Drupal projects. Performs quality assurance tasks for each commit made against a project. Code will not be able to be commited until it passes the minimum quality standards.
 
-The tool uses [PHPCS][1], [PHP Unit][2] and [Drupal Coder][3] and these tools will be installed locally to the project. New developers on a project will have the prerequisites met when they perform their first commit.
+The tool uses [PHPCS][1], [PHP Unit][2] and [Drupal Coder][3]. These tools will be installed locally to the project so as not to conflict with other installed versions.
 
 ## Dependencies
 
@@ -11,7 +11,7 @@ The tool uses [PHPCS][1], [PHP Unit][2] and [Drupal Coder][3] and these tools wi
 - php
 - wget
 
-## Install
+## Initial Setup
 
 ```
 wget https://raw.githubusercontent.com/steveworley/commit-tools/master/setup -v -O setup && chmod +x ./setup && ./setup develop
@@ -25,7 +25,7 @@ Alternatively:
 
 The `setup` file should be committed to the project repo so that developers can run `./setup` prior to starting work. This will ensure that all `pre-commit` tasks are available.
 
-## Arguments
+### Arguments
 
 The `setup` script will accept a number of arguments to help generate the required files for the project.
 
@@ -49,7 +49,7 @@ wget https://raw.githubusercontent.com/steveworley/commit-tools/master/setup -v 
 
 Any arguments provided will be used to update the `setup` script so that subsequent runs can install dependencies without knowledge of configuration.
 
-## Configuration
+### Configuration
 
 Alter the `setup` file and change the configuration variables so they match your project.
 
@@ -57,6 +57,10 @@ Alter the `setup` file and change the configuration variables so they match your
 - `TASKS` _[default: (code-review.sh tests.sh)]_: A list of tasks that you want to include with this project. These will be downloaded from [tasks][5] so only files available here can be used.
 - `PREFIX` _[default: PROJ]_: Prefix used for commit messages typically set to JIRA project name
 - `LENGTH` _[default: 15]_: Minimum length for commit messages
+
+## Developer setup
+
+When a new developer picks up the project they will be required to run the `./setup` script, this will ensure that all tools are downloaded and everything is setup ready for them to begin committing code.
 
 ## Notes
 
