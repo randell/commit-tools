@@ -4,11 +4,11 @@
 # govCMS Project
 # Perform code review tasks against the changed files.
 #
+shift
+CHANGED_FILES=$@
 
 ROOT=`pwd`
 PHPCS="$ROOT/vendor/bin/phpcs"
-
-CHANGED_FILES=$2
 
 for FILE in $CHANGED_FILES
 do
