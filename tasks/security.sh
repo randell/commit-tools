@@ -3,7 +3,8 @@
 # Perform security scan against changed files.
 #
 ROOT="$(pwd)"
-CHANGED_FILES=$2
+shift
+CHANGED_FILES=$@
 
 for FILE in $CHANGED_FILES
 do
