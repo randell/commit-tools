@@ -9,7 +9,7 @@ ROOT=`pwd`
 PHPUNIT="$ROOT/vendor/bin/phpunit"
 DIR="$ROOT/docroot/sites/all/themes/custom"
 
-if [ ! -d "$DIR"]; then
+if [ ! -d "$DIR" ]; then
   echo "Custom theme directory is not found... skipping theme tests."
   exit 0;
 fi
