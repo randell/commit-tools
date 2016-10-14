@@ -4,14 +4,13 @@
 # govCMS Project
 # Perform code review tasks against the changed files.
 #
+shift
+CHANGED_FILES=$@
 
 ROOT=`pwd`
 PHPCS="$ROOT/vendor/bin/phpcs"
 EXCLUDE="/modules/contrib"
 
-# Shift the passed arguments to get the list of changed files.
-shift
-CHANGED_FILES=$@
 declare -a SNIFF_FILES
 
 for FILE in $CHANGED_FILES
