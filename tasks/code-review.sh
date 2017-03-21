@@ -31,7 +31,7 @@ done
 # Run phpcs across changed files.
 # @TODO: Could potentially include the Drupal best practice sniff from coder.
 if [ ! -z "$SNIFF_FILES" ]; then
-  $PHPCS --standard=Drupal -n -p ${SNIFF_FILES[@]}
+  $PHPCS $PHPCS --standard=$ROOT/vendor/drupal/coder/coder_sniffer/Drupal -n -p ${SNIFF_FILES[@]} -n -p ${SNIFF_FILES[@]}
   if [ $? != 0 ]; then
 	  echo "Fix the error before commit."
 	  exit 1
