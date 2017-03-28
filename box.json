@@ -1,0 +1,43 @@
+{
+  "alias": "box.phar",
+  "chmod": "0755",
+  "compactors": [
+    "Herrera\\Box\\Compactor\\Json",
+    "Herrera\\Box\\Compactor\\Php"
+  ],
+  "directories": [
+    "src/"
+  ],
+  "extract": true,
+  "files": [
+    "LICENSE",
+    "setup.php",
+    "res/schema.json",
+    "src/vendors/herrera-io/phar-update/res/schema.json"
+  ],
+  "finder": [
+    {
+      "name": "*.php",
+      "exclude": [
+        "File",
+        "mikey179",
+        "Net",
+        "phpunit",
+        "phpunit-test-case",
+        "Tester",
+        "Tests",
+        "tests",
+        "yaml"
+      ],
+      "in": "src/vendors"
+    }
+  ],
+  "git-commit": "git-commit",
+  "git-version": "git-version",
+  "main": "bin/box",
+  "output": "box-@git-version@.phar",
+  "replacements": {
+    "manifest_url": "https://box-project.github.io/box2/manifest.json"
+  },
+  "stub": true
+}
