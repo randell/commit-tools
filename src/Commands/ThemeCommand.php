@@ -99,4 +99,90 @@ class ThemeCommand extends Tasks {
 
     $this->io()->success("Successfully created theme directories");
   }
+
+  /**
+   * Command theme:setup
+   *
+   * This will checkout and copy the directory into the sites theme folders.
+   * This will allow a theme git repo to be managed out side of the
+   * Drupal repo without subtrees + submodules which makes it compatible with
+   * various hosting arrangements.
+   */
+  public function themeSetup() {
+    if (!$this->getConfig('theme.name', FALSE)) {
+      $this->io()->error('Theme name needs to be defined.');
+      return;
+    }
+
+    $this->io()->title('Theme setup');
+
+    // Create a git clone of the configured theme repo.
+    $this->taskGitStack()
+      ->stopOnFail()
+      ->cloneRepo($this->getConfig('theme.repo'), __DIR__ . '/../' . $this->getConfig('theme.name'))
+      ->run();
+
+    $this->themeSync();
+  }
+
+  /**
+   * Command theme:sync.
+   *
+   * Handles copying files back to to the docroot. We use PHP as opposed to the
+   * filesystem so we can run this on Windows and 'nix systems a like.
+   */
+  public function themeSync() {
+    $src = __DIR__ . '/../' . $this->getConfig('theme.name');
+    $dst = $this->getConfig('theme.dir');
+
+    $result = $this->taskCopyDir([$src => $dst])->run();
+
+    if (!$result) {
+      $this->io()->error('Unable to copy theme files');
+      return;
+    }
+
+    $this->io()->success('Successfully copied theme files');
+  }
+
+  /**
+   * Command theme:watch.
+   *
+   * This will watch the directory and monitor for any changes. If a file in the
+   * directory changes we will build all the assets and sync the theme folder.
+   *
+   * This should be run when actively developing the theme.
+   */
+  public function themeWatch() {
+    return $this->taskWatch()
+      ->monitor('../'. $this->getConfig('theme.name'), function() {
+        $this->themeSync();
+      });
+  }
+
+  /**
+   * Command theme:branch.
+   */
+  public function themeBranch() {
+    chdir(__DIR__ . '/../' . $this->getConfig('theme.name'));
+    $branch = $this->ask('Enter a branch name');
+
+    $this->taskGitStack()
+      ->stopOnFail()
+      ->checkout("-b $branch")
+      ->run();
+  }
+
+  public function themeCommit() {
+    chdir(__DIR__ . '/../' . $this->getConfig('theme.name'));
+    $message = $this->ask('Enter a commit message');
+
+    $this->taskGitStack()
+      ->stopOnFail()
+      ->add('-A')
+      ->commit($message)
+      ->push()
+      ->run();
+  }
+
 }
