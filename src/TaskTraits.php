@@ -73,7 +73,7 @@ trait TaskTraits {
 
     if (!$confirm) {
       $this->theme_dir = $this->ask('What is the theme directory? (relative to the current directory)');
-      $this->theme_dir = $this->drupalRoot() . "/{$this->theme_dir}";
+      $this->theme_dir = getcwd() . "/{$this->theme_dir}";
     }
 
     if (empty($this->theme_dir)) {

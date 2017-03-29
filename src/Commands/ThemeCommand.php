@@ -96,5 +96,7 @@ class ThemeCommand extends Tasks {
     }
 
     $fs->run();
+
+    $this->io()->success("Successfully created theme directories");
   }
 }

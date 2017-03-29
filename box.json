@@ -9,17 +9,11 @@
     "src/"
   ],
   "extract": true,
-  "files": [
-    "LICENSE",
-    "setup.php",
-    "res/schema.json",
-    "src/vendors/herrera-io/phar-update/res/schema.json"
-  ],
+  "files": ["setup.php"],
   "finder": [
     {
       "name": "*.php",
       "exclude": [
-        "File",
         "mikey179",
         "Net",
         "phpunit",
@@ -29,15 +23,16 @@
         "tests",
         "yaml"
       ],
-      "in": "src/vendors"
+      "in": "vendor"
     }
   ],
   "git-commit": "git-commit",
   "git-version": "git-version",
-  "main": "bin/box",
+  "main": "setup.php",
   "output": "box-@git-version@.phar",
   "replacements": {
     "manifest_url": "https://box-project.github.io/box2/manifest.json"
   },
-  "stub": true
+  "stub": true,
+  "output": "d7setup.phar"
 }

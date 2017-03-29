@@ -2,7 +2,8 @@
     "name": "steven.worley/d7-setup",
     "type": "project",
     "require": {
-        "consolidation/robo": "^1.0"
+        "consolidation/robo": "^1.0",
+        "kherge/box": "^2.7"
     },
     "autoload":{
         "psr-4":{
@@ -15,9 +16,6 @@
             "email": "sj.worley88@gmail.com"
         }
     ],
-    "require-dev": {
-        "kherge/box": "^2.7"
-    },
     "scripts": {
         "build": "./vendor/bin/box build"
     }
